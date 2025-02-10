@@ -1,2 +1,2 @@
-package raffle_gui
+package main
 
