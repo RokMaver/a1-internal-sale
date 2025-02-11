@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Razprodaja</title>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            height: 100vh;
+        }
+        .left {
+            width: 70%;
+            overflow-y: auto;
+            padding-left: 20px; /* Adjust this value as needed */
+        }
+        .left h2, .left table {
+            margin-left: 20px; /* Adjust this value as needed */
+        }
+        .right {
+            width: 30%;
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background-color: #f0f0f0;
+            padding: 10px;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        #total-price {
+            margin-top: 5px; /* Adjust this value as needed */
+            margin-bottom: 20px;
+            font-weight: bold;
+            align-self: flex-start;
+        }
+        table tr td:nth-child(6),
+        table tr th:nth-child(6) {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="left">
+    {{range $key, $records := .}}
+    <h2>{{index (index $records 0) 2}}</h2>
+    <table border="1">
+        {{range $i, $record := $records}}
+        <tr>
+            {{range $j, $cell := $record}}
+            <td>{{.}}</td>
+            {{end}}
+            {{if ne $i 0}}
+            <td><input type="checkbox" class="item-checkbox" data-name="{{index $record 2}}" data-quantity="{{index $record 3}}" data-price="{{index $record 4}}" data-limit="{{index (index $records 0) 5}}"></td>
+            <td><input type="number" min="0" value="0" class="item-quantity" data-name="{{index $record 2}}" disabled></td>
+            {{end}}
+        </tr>
+        {{end}}
+    </table>
+    <ul class="selected-items" data-table="{{index (index $records 0) 2}}"></ul>
+    {{end}}
+</div>
+<div class="right">
+    <div>
+        <h2>Izbrani izdelki</h2>
+        <div id="selected-items-container"></div>
+    </div>
+    <div id="total-price"></div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const tables = document.querySelectorAll('.left table');
+        const selectedItemsContainer = document.getElementById('selected-items-container');
+        const totalPriceElement = document.getElementById('total-price');
+
+        tables.forEach(table => {
+            const checkboxes = table.querySelectorAll('.item-checkbox');
+            const quantities = table.querySelectorAll('.item-quantity');
+            const selectedItemsList = table.nextElementSibling;
+            const limit = parseInt(table.querySelector('.item-checkbox').getAttribute('data-limit'), 10);
+
+            checkboxes.forEach((checkbox, index) => {
+                checkbox.addEventListener('change', function() {
+                    const availableQuantity = parseInt(checkbox.getAttribute('data-quantity'), 10);
+                    if (checkbox.checked) {
+                        quantities[index].disabled = false;
+                        quantities[index].value = 1;
+                        quantities[index].min = 1;
+                        quantities[index].max = limit === -1 ? availableQuantity : limit;
+                    } else {
+                        quantities[index].disabled = true;
+                        quantities[index].value = 0;
+                    }
+                    updateSelectedItems();
+                    enforceCheckboxLimit(checkboxes, limit);
+                });
+            });
+
+            quantities.forEach(quantity => {
+                quantity.addEventListener('input', updateSelectedItems);
+            });
+
+            function enforceCheckboxLimit(checkboxes, limit) {
+                const checkedCount = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+                checkboxes.forEach(checkbox => {
+                    if (!checkbox.checked) {
+                        checkbox.disabled = limit !== -1 && checkedCount >= 2;
+                    }
+                });
+            }
+
+            function updateSelectedItems() {
+                selectedItemsList.innerHTML = '';
+                checkboxes.forEach((checkbox, index) => {
+                    if (checkbox.checked) {
+                        const name = checkbox.getAttribute('data-name');
+                        const quantity = quantities[index].value;
+                        const price = checkbox.getAttribute('data-price');
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${name} - Količina: ${quantity} - Cena: ${price}`;
+                        selectedItemsList.appendChild(listItem);
+                    }
+                });
+                updateSelectedItemsContainer();
+            }
+
+            function updateSelectedItemsContainer() {
+                selectedItemsContainer.innerHTML = '';
+                const selectedLists = document.querySelectorAll('.selected-items');
+                let totalPrice = 0;
+                selectedLists.forEach(list => {
+                    if (list.children.length > 0) {
+                        const tableTitle = list.getAttribute('data-table');
+                        const titleElement = document.createElement('h3');
+                        titleElement.textContent = tableTitle;
+                        selectedItemsContainer.appendChild(titleElement);
+                        const clonedList = list.cloneNode(true);
+                        Array.from(clonedList.children).forEach((item, index) => {
+                            item.textContent = `${index + 1}. ${item.textContent}`;
+                            const itemPrice = parseFloat(item.textContent.split(' - Cena: ')[1]);
+                            totalPrice += itemPrice;
+                        });
+                        selectedItemsContainer.appendChild(clonedList);
+                    }
+                });
+                totalPriceElement.textContent = `Skupna cena: ${totalPrice.toFixed(2)} €`;
+            }
+        });
+    });
+</script>
+</body>
+</html>

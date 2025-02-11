@@ -11,7 +11,7 @@ import (
 func main() {
 
 	h1 := func(w http.ResponseWriter, r *http.Request) {
-		tmp1 := template.Must(template.ParseFiles("index.html"))
+		tmp1 := template.Must(template.ParseFiles("html/index.html"))
 		tmp1.Execute(w, nil)
 	}
 
@@ -38,7 +38,7 @@ func main() {
 			groupedRecords[key] = append(groupedRecords[key], record)
 		}
 
-		tmp2 := template.Must(template.ParseFiles("items.html"))
+		tmp2 := template.Must(template.ParseFiles("html/items.html"))
 		tmp2.Execute(w, groupedRecords)
 	}
 
