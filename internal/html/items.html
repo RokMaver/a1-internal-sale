@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Razprodaja</title>
+    <link rel="stylesheet" href="/static/css/items.css">
+    <script src="/static/js/items.js"></script>
+</head>
+<body>
+<div class="left">
+    {{range $key, $records := .}}
+    <h2>{{index (index $records 0) 2}}</h2>
+    <table border="1">
+        {{range $i, $record := $records}}
+        <tr>
+            {{range $j, $cell := $record}}
+            <td>{{.}}</td>
+            {{end}}
+            {{if ne $i 0}}
+            <td><input type="checkbox" class="item-checkbox" data-name="{{index $record 2}}" data-quantity="{{index $record 3}}" data-price="{{index $record 4}}" data-limit="{{index (index $records 0) 5}}"></td>
+            <td><input type="number" min="0" value="0" class="item-quantity" data-name="{{index $record 2}}" disabled></td>
+            {{end}}
+        </tr>
+        {{end}}
+    </table>
+    <ul class="selected-items" data-table="{{index (index $records 0) 2}}"></ul>
+    {{end}}
+</div>
+<div class="right">
+    <div>
+        <h2>Izbrani izdelki</h2>
+        <div id="selected-items-container"></div>
+    </div>
+    <div id="total-price"></div>
+</div>
+</body>
+</html>
