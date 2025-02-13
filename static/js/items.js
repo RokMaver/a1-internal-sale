@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
         function updateSelectedItemsContainer() {
             selectedItemsContainer.innerHTML = '';
             let totalPrice = 0;
-            let globalIndex = 1;
             const groupedItems = selectedItems.reduce((acc, item) => {
                 if (!acc[item.tableTitle]) {
                     acc[item.tableTitle] = [];
@@ -58,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 titleElement.textContent = tableTitle;
                 selectedItemsContainer.appendChild(titleElement);
 
+                let globalIndex = 1; // Reset globalIndex for each table group
                 items.forEach(item => {
                     const name = item.checkbox.getAttribute('data-name');
                     const quantity = item.quantity.value;
@@ -72,4 +72,4 @@ document.addEventListener('DOMContentLoaded', function() {
             totalPriceElement.textContent = `Skupna cena: ${totalPrice.toFixed(2)} €`;
         }
     });
-});s
+});
