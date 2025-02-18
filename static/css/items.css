@@ -19,10 +19,6 @@ body {
 .left h2, .left table {
     margin-left: 20px; /* Adjust this value as needed */
 }
-.item-quantity {
-    width: 35px; /* Adjust this value as needed */
-    text-align: center;
-}
 .right {
     width: 30%;
     position: fixed;
@@ -147,4 +143,45 @@ input[type="checkbox"]::after {
 /* Show the check mark when the checkbox is checked */
 input[type="checkbox"]:checked::after {
     opacity: 1;
+}
+
+/* Wrapper ensures the buttons' space is always reserved */
+.quantity-wrapper {
+    width: 80px;  /* Adjust width as needed */
+    text-align: center;
+}
+
+/* Hide quantity buttons by default but reserve space */
+.quantity-controls {
+    opacity: 0;
+    transform: translateX(-20px);  /* Shift left slightly */
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;  /* Space between buttons */
+}
+
+/* Slide out buttons only for selected row */
+.show-controls {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Style for increment and decrement buttons */
+button.increment-btn, button.decrement-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: #e60000;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 3px;
+    text-align: center;
+    transition: background-color 0.2s ease-in-out;
+}
+
+button.increment-btn:hover, button.decrement-btn:hover {
+    background-color: #c20000;
 }

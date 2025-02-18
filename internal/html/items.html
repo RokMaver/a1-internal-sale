@@ -22,7 +22,14 @@
             {{end}}
             {{if ne $i 0}}
             <td><input type="checkbox" class="item-checkbox" data-name="{{index $record 2}}" data-quantity="{{index $record 3}}" data-price="{{index $record 4}}" data-limit="{{index (index $records 0) 5}}"></td>
-            <td><input type="number" min="0" value="0" class="item-quantity" data-name="{{index $record 2}}" disabled></td>
+            <td>
+                <div class="quantity-wrapper">
+                    <div class="quantity-controls" data-name="{{index $record 2}}">
+                        <button class="decrement-btn" data-name="{{index $record 2}}">-</button>
+                        <button class="increment-btn" data-name="{{index $record 2}}">+</button>
+                    </div>
+                </div>
+            </td>
             {{end}}
         </tr>
         {{end}}
