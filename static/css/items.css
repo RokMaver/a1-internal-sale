@@ -2,15 +2,19 @@ body {
     display: flex;
     margin: 0;
     height: 100vh;
+    width: 100%;
     font-family: Arial, sans-serif;
     color: #333;
+    overflow-x: hidden;
 }
 .left {
     width: 70%;
-    height: 90%;
+    height: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
     padding-top: 60px;
     padding-left: 20px; /* Adjust this value as needed */
+    padding-right: 35%;
 }
 .left h2, .left table {
     margin-left: 20px; /* Adjust this value as needed */
@@ -42,9 +46,40 @@ body {
     align-self: flex-start;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 8px 8px 15px #d1d9e6, -8px -8px 15px #ffffff;
+    border: 1px #ddd;
+}
+
+table tr:not(:first-child):hover {
+    background-color: #d1d9e6;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Table Header */
+th {
+    background-color: #f4f4f4;
+    text-align: left;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Table Rows */
+td {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
 table tr td:nth-child(1),
 table tr th:nth-child(1) {
     display: none;
+
 }
 
 table tr td:nth-child(2),
@@ -78,4 +113,36 @@ table tr th:nth-child(5) {
 table tr td:nth-child(6),
 table tr th:nth-child(6) {
     display: none;
+}
+
+/* Hide the default checkbox */
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+}
+
+/* Create a custom check mark */
+input[type="checkbox"]::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    width: 6px;
+    height: 12px;
+    border: solid #e60000; /* Change this color to your desired check mark color */
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+/* Show the check mark when the checkbox is checked */
+input[type="checkbox"]:checked::after {
+    opacity: 1;
 }
