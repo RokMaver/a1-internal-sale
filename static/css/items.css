@@ -2,6 +2,8 @@ body {
     display: flex;
     margin: 0;
     height: 100vh;
+    font-family: Arial, sans-serif;
+    color: #333;
 }
 .left {
     width: 70%;
