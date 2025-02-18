@@ -15,7 +15,7 @@ func main() {
 
 	// Handler for the index page
 	h1 := func(w http.ResponseWriter, r *http.Request) {
-		tmp1 := template.Must(template.ParseFiles("../internal/html/index.html"))
+		tmp1 := template.Must(template.ParseFiles("../internal/html/index.html", "../internal/html/header.html"))
 		tmp1.Execute(w, nil)
 	}
 
@@ -42,7 +42,7 @@ func main() {
 			groupedRecords[key] = append(groupedRecords[key], record)
 		}
 
-		tmp2 := template.Must(template.ParseFiles("../internal/html/items.html"))
+		tmp2 := template.Must(template.ParseFiles("../internal/html/items.html", "../internal/html/header.html"))
 		tmp2.Execute(w, groupedRecords)
 	}
 

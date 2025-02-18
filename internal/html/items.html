@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Razprodaja</title>
     <link rel="stylesheet" href="/static/css/items.css">
+    <link rel="stylesheet" href="/static/css/header.css">
     <script src="/static/js/items.js"></script>
 </head>
 <body>
+{{template "header.html".}}
 <div class="left">
     {{range $key, $records := .}}
     <h2>{{index (index $records 0) 2}}</h2>
