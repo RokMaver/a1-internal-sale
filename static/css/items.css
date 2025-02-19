@@ -72,6 +72,15 @@ th {
 td {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
+    padding: 0;
+    margin: 0;
+    height: 30px;
+    position: relative;
+}
+
+table tr,
+table tr td {
+    height: 31px;
 }
 
 table tr td:nth-child(1),
@@ -118,8 +127,11 @@ input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    width: 15px;
-    height: 15px;
+    width: 30px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
     border-radius: 3px;
     position: relative;
     cursor: pointer;
@@ -129,8 +141,8 @@ input[type="checkbox"] {
 input[type="checkbox"]::after {
     content: '';
     position: absolute;
-    top: 2px;
-    left: 6px;
+    top: 30%;
+    left: 50%;
     width: 6px;
     height: 12px;
     border: solid #e60000; /* Change this color to your desired check mark color */
@@ -154,8 +166,8 @@ input[type="checkbox"]:checked::after {
 /* Hide quantity buttons by default but reserve space */
 .quantity-controls {
     opacity: 0;
-    transform: translateX(-20px);  /* Shift left slightly */
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    transform: translateX(-100px);  /* Shift left slightly */
+    transition: transform 0.2s ease-out, opacity 0.2s ease-out;
     display: inline-flex;
     align-items: center;
     justify-content: center;

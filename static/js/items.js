@@ -52,11 +52,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         assignOrderToSelectedItem(tableName, itemName);
                         updateSelectedItem(tableName, itemName, 1);
                         quantityControls.classList.add('show-controls');
+                        incrementButton.disabled = false;
+                        decrementButton.disabled = false;
                     } else {
                         checkedCount--;
                         removeOrderFromItem(tableName, itemName);
                         updateSelectedItem(tableName, itemName, 0);
                         quantityControls.classList.remove('show-controls');
+                        incrementButton.disabled = true;
+                        decrementButton.disabled = true;
                     }
                     updateSelectedItemsContainer();
                 });
@@ -81,6 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         checkedCount--;
                         removeOrderFromItem(tableName, itemName);
                         quantityControls.classList.remove('show-controls');
+                        incrementButton.disabled = true;
+                        decrementButton.disabled = true;
                     }
                     updateSelectedItemsContainer();
                 });
@@ -163,3 +169,4 @@ document.addEventListener('DOMContentLoaded', function () {
         totalPriceElement.textContent = `Skupna cena: ${totalPrice.toFixed(2)} €`;
     }
 });
+
