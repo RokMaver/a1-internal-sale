@@ -123,6 +123,7 @@ table tr th:nth-child(6) {
 }
 
 /* Hide the default checkbox */
+/* Hide the default checkbox */
 input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
@@ -135,14 +136,14 @@ input[type="checkbox"] {
     border-radius: 3px;
     position: relative;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Create a custom check mark */
 input[type="checkbox"]::after {
     content: '';
-    position: absolute;
-    top: 30%;
-    left: 50%;
     width: 6px;
     height: 12px;
     border: solid #e60000; /* Change this color to your desired check mark color */
@@ -166,7 +167,7 @@ input[type="checkbox"]:checked::after {
 /* Hide quantity buttons by default but reserve space */
 .quantity-controls {
     opacity: 0;
-    transform: translateX(-100px);  /* Shift left slightly */
+    transform: translateX(-110px);  /* Shift left slightly */
     transition: transform 0.2s ease-out, opacity 0.2s ease-out;
     display: inline-flex;
     align-items: center;
