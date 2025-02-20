@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 )
 
 func main() {
@@ -21,7 +22,7 @@ func main() {
 
 	// Handler for the items page
 	internaItems := func(w http.ResponseWriter, r *http.Request) {
-		file, err := os.Open("../data/interna1.csv")
+		file, err := os.Open("../data/uploaded.csv")
 		if err != nil {
 			http.Error(w, "Could not open CSV file", http.StatusInternalServerError)
 			return
@@ -46,7 +47,56 @@ func main() {
 		tmp2.Execute(w, groupedRecords)
 	}
 
+	adminCtrl := func(w http.ResponseWriter, r *http.Request) {
+		tmp3 := template.Must(template.ParseFiles("../internal/html/admin.html", "../internal/html/header.html"))
+		tmp3.Execute(w, nil)
+	}
+
+	uploadHandler := func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != "POST" {
+			http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+			return
+		}
+
+		file, _, err := r.FormFile("csvfile")
+		if err != nil {
+			http.Error(w, "Could not read uploaded file", http.StatusBadRequest)
+			return
+		}
+		defer file.Close()
+
+		dst, err := os.Create(filepath.Join("../data", "uploaded.csv"))
+		if err != nil {
+			http.Error(w, "Could not save uploaded file", http.StatusInternalServerError)
+			return
+		}
+		defer dst.Close()
+
+		_, err = dst.ReadFrom(file)
+		if err != nil {
+			http.Error(w, "Could not save uploaded file", http.StatusInternalServerError)
+			return
+		}
+
+		deadline := r.FormValue("deadline")
+		if deadline == "" {
+			http.Error(w, "Deadline is required", http.StatusBadRequest)
+			return
+		}
+
+		// Save the deadline to a file or database as needed
+		err = os.WriteFile(filepath.Join("../data", "uploaded.txt"), []byte(deadline), 0644)
+		if err != nil {
+			http.Error(w, "Could not save deadline", http.StatusInternalServerError)
+			return
+		}
+
+		http.Redirect(w, r, "/items", http.StatusSeeOther)
+	}
+
 	http.HandleFunc("/", h1)
 	http.HandleFunc("/items", internaItems)
+	http.HandleFunc("/admin", adminCtrl)
+	http.HandleFunc("/upload", uploadHandler)
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }

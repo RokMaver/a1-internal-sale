@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin - Set Sale Deadline</title>
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+{{template "header.html".}}
+<div class="container">
+    <h2>Set Sale Deadline and Upload CSV</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="deadline" name="deadline">
+        <input type="file" name="csvfile" accept=".csv">
+        <button type="button" id="setDeadlineBtn">Set Sale Deadline</button>
+        <button type="submit" id="submitBtn" style="display: none;">Confirm Deadline</button>
+    </form>
+</div>
+
+<script src="/static/js/admin.js"></script>
+
+</body>
+</html>
