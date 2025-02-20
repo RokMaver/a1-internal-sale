@@ -7,22 +7,33 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"runtime"
 )
 
+func getBaseDir() string {
+	_, filename, _, _ := runtime.Caller(0)
+	return filepath.Dir(filename)
+}
+
 func main() {
+	baseDir := getBaseDir()
+
 	// Serve static files from the "static" directory
 	fs := http.FileServer(http.Dir("../static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	// Handler for the index page
 	h1 := func(w http.ResponseWriter, r *http.Request) {
-		tmp1 := template.Must(template.ParseFiles("../internal/html/index.html", "../internal/html/header.html"))
+		tmplPath1 := filepath.Join(baseDir, "../internal/html/index.html")
+		tmplPath2 := filepath.Join(baseDir, "../internal/html/header.html")
+		tmp1 := template.Must(template.ParseFiles(tmplPath1, tmplPath2))
 		tmp1.Execute(w, nil)
 	}
 
 	// Handler for the items page
 	internaItems := func(w http.ResponseWriter, r *http.Request) {
-		file, err := os.Open("../data/uploaded.csv")
+		filePath := filepath.Join(baseDir, "../data/uploaded.csv")
+		file, err := os.Open(filePath)
 		if err != nil {
 			http.Error(w, "Could not open CSV file", http.StatusInternalServerError)
 			return
@@ -43,12 +54,16 @@ func main() {
 			groupedRecords[key] = append(groupedRecords[key], record)
 		}
 
-		tmp2 := template.Must(template.ParseFiles("../internal/html/items.html", "../internal/html/header.html"))
+		tmplPath1 := filepath.Join(baseDir, "../internal/html/items.html")
+		tmplPath2 := filepath.Join(baseDir, "../internal/html/header.html")
+		tmp2 := template.Must(template.ParseFiles(tmplPath1, tmplPath2))
 		tmp2.Execute(w, groupedRecords)
 	}
 
 	adminCtrl := func(w http.ResponseWriter, r *http.Request) {
-		tmp3 := template.Must(template.ParseFiles("../internal/html/admin.html", "../internal/html/header.html"))
+		tmplPath1 := filepath.Join(baseDir, "../internal/html/admin.html")
+		tmplPath2 := filepath.Join(baseDir, "../internal/html/header.html")
+		tmp3 := template.Must(template.ParseFiles(tmplPath1, tmplPath2))
 		tmp3.Execute(w, nil)
 	}
 
@@ -65,7 +80,8 @@ func main() {
 		}
 		defer file.Close()
 
-		dst, err := os.Create(filepath.Join("../data", "uploaded.csv"))
+		dstPath := filepath.Join(baseDir, "../data/uploaded.csv")
+		dst, err := os.Create(dstPath)
 		if err != nil {
 			http.Error(w, "Could not save uploaded file", http.StatusInternalServerError)
 			return
@@ -85,7 +101,8 @@ func main() {
 		}
 
 		// Save the deadline to a file or database as needed
-		err = os.WriteFile(filepath.Join("../data", "deadline.txt"), []byte(deadline), 0644)
+		deadlinePath := filepath.Join(baseDir, "../data/deadline.txt")
+		err = os.WriteFile(deadlinePath, []byte(deadline), 0644)
 		if err != nil {
 			http.Error(w, "Could not save deadline", http.StatusInternalServerError)
 			return
