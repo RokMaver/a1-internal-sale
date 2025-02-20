@@ -85,7 +85,7 @@ func main() {
 		}
 
 		// Save the deadline to a file or database as needed
-		err = os.WriteFile(filepath.Join("../data", "uploaded.txt"), []byte(deadline), 0644)
+		err = os.WriteFile(filepath.Join("../data", "deadline.txt"), []byte(deadline), 0644)
 		if err != nil {
 			http.Error(w, "Could not save deadline", http.StatusInternalServerError)
 			return

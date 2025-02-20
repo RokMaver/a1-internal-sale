@@ -35,6 +35,11 @@ body {
     flex-direction: column;
     justify-content: space-between;
 }
+
+.logo {
+    padding-left: 25px;
+}
+
 #total-price {
     margin-top: 5px; /* Adjust this value as needed */
     margin-bottom: 20px;

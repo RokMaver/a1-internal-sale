@@ -10,16 +10,21 @@
 <body>
 {{template "header.html".}}
 <div class="container">
-    <h2>Set Sale Deadline and Upload CSV</h2>
+    <h2>Upload CSV and Set Sale Deadline</h2>
     <form action="/upload" method="post" enctype="multipart/form-data">
         <input type="hidden" id="deadline" name="deadline">
-        <input type="file" name="csvfile" accept=".csv">
+        <input type="file" name="csvfile" id="csvfile" accept=".csv" style="display: none;">
+        <label for="csvfile" class="custom-file-upload">Choose File</label>
+        <div class  ="fileName">
+            <span id="fileNameDisplay"></span> <!-- Placeholder for displaying the chosen file name -->
+        </div>
         <button type="button" id="setDeadlineBtn">Set Sale Deadline</button>
-        <button type="submit" id="submitBtn" style="display: none;">Confirm Deadline</button>
+        <div class = "setDead">
+            <span id="deadlineDisplay"></span>
+        </div> <!-- Placeholder for displaying the selected deadline -->
+        <button type="submit" id="submitBtn">Confirm</button>
     </form>
 </div>
-
 <script src="/static/js/admin.js"></script>
-
 </body>
 </html>
