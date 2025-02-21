@@ -1,0 +1,50 @@
+body {
+    display: flex;
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    color: #333;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 60%;
+    max-width: 600px;
+    background: white;
+    padding: 20px 60px 60px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+#countdown {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e60000;
+}
+
+#itemsButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #e60000;
+    border: 1px solid #e60000;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#itemsButton:hover {
+    background-color: #c20000;
+    border-color: #c20000;
+}

@@ -28,7 +28,20 @@ func main() {
 		tmplPath1 := filepath.Join(baseDir, "../internal/html/index.html")
 		tmplPath2 := filepath.Join(baseDir, "../internal/html/header.html")
 		tmp1 := template.Must(template.ParseFiles(tmplPath1, tmplPath2))
-		tmp1.Execute(w, nil)
+
+		// Read the deadline from the file
+		deadlinePath := filepath.Join(baseDir, "../data/deadline.txt")
+		deadline, err := os.ReadFile(deadlinePath)
+		if err != nil {
+			http.Error(w, "Could not read deadline", http.StatusInternalServerError)
+			return
+		}
+
+		// Pass the deadline to the template
+		data := map[string]string{
+			"Deadline": string(deadline),
+		}
+		tmp1.Execute(w, data)
 	}
 
 	// Handler for the items page
@@ -109,7 +122,7 @@ func main() {
 			return
 		}
 
-		http.Redirect(w, r, "/items", http.StatusSeeOther)
+		http.Redirect(w, r, "/index", http.StatusSeeOther)
 	}
 
 	http.HandleFunc("/", h1)
