@@ -1,12 +1,19 @@
 body {
     display: flex;
     margin: 0;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     font-family: Arial, sans-serif;
     color: #333;
     overflow-x: hidden;
+    justify-content: center;
+    align-items: center;
 }
+
+body::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, and Opera */
+}
+
 .left {
     width: 70%;
     height: 100%;
@@ -34,10 +41,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-
-.logo {
-    padding-left: 25px;
 }
 
 #total-price {

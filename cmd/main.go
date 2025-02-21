@@ -19,7 +19,8 @@ func main() {
 	baseDir := getBaseDir()
 
 	// Serve static files from the "static" directory
-	fs := http.FileServer(http.Dir("../static"))
+	staticDir := filepath.Join(baseDir, "../static")
+	fs := http.FileServer(http.Dir(staticDir))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	// Handler for the index page
