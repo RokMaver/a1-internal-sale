@@ -14,7 +14,7 @@ body {
 .container {
     width: 60%;
     max-width: 600px;
-    background: white;
+    background: var(--table-odd);
     padding: 20px 60px 60px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -23,7 +23,7 @@ body {
 
 h2 {
     margin-bottom: 20px;
-    color: #333;
+    color: var(--text-color);
 }
 
 form {
@@ -77,7 +77,7 @@ button:hover {
 #fileNameDisplay, #deadlineDisplay {
     margin-top: 10px;
     font-size: 14px;
-    color: #333;
+    color: var(--text-color);
 }
 
 .fileName {

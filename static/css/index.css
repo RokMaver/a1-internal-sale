@@ -4,17 +4,17 @@ body {
     height: 100vh;
     width: 100%;
     font-family: Arial, sans-serif;
-    color: #333;
+    color: var(--text-color);
     justify-content: center;
     align-items: center;
-    background-color: #f9f9f9;
+    background-color: var(--background-color);
     overflow-x: hidden;
 }
 
 .container {
     width: 60%;
     max-width: 600px;
-    background: white;
+    background: var(--table-odd);
     padding: 20px 60px 60px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -23,7 +23,7 @@ body {
 
 h2 {
     margin-bottom: 20px;
-    color: #333;
+    color: var(--text-color);
 }
 
 #countdown {

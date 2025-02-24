@@ -4,6 +4,8 @@
     --button-background: #c60000;
     --button-text: #ffffff;
     --base-variant: #e8e9ed;
+    --table-odd: #f9f9f9;
+    --table-hover: #f0f0f0;
 }
 
 .darkmode {
@@ -12,6 +14,8 @@
     --button-background: #c60000;
     --button-text: #ffffff;
     --base-variant: #101425;
+    --table-odd: #292929;
+    --table-hover: #3a3a3a;
 }
 
 #theme-switch {
