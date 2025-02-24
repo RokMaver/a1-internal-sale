@@ -41,11 +41,33 @@ body::-webkit-scrollbar {
     justify-content: space-between;
 }
 
+.total-price-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
 #total-price {
-    margin-top: 5px; /* Adjust this value as needed */
-    margin-bottom: 20px;
+    font-size: 1rem;
     font-weight: bold;
-    align-self: flex-start;
+}
+
+#goToMyItemsButton {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #e60000;
+    border: 1px solid #e60000;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#goToMyItemsButton:hover {
+    background-color: #c20000;
+    border-color: #c20000;
 }
 
 table {

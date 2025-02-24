@@ -16,36 +16,45 @@
     <h2>{{index (index $records 0) 2}}</h2>
     <table border="1">
         {{range $i, $record := $records}}
-        <tr>
-            {{range $j, $cell := $record}}
-            <td>{{.}}</td>
-            {{end}}
-            {{if ne $i 0}}
-            <td>
-                <input type="checkbox" class="item-checkbox" data-name="{{index $record 2}}" data-quantity="{{index $record 3}}" data-price="{{index $record 4}}" data-limit="{{index (index $records 0) 5}}">
-            </td>
-            <td colspan="2">
-                <div class="quantity-wrapper">
-                    <div class="quantity-controls" data-name="{{index $record 2}}">
-                        <button class="decrement-btn" data-name="{{index $record 2}}" disabled>-</button>
-                        <button class="increment-btn" data-name="{{index $record 2}}" disabled>+</button>
-                    </div>
+        {{range $j, $cell := $record}}
+        <td>{{.}}</td>
+        {{end}}
+        {{if ne $i 0}}
+        <td>
+            <input type="checkbox" class="item-checkbox" data-name="{{index $record 2}}" data-quantity="{{index $record 3}}" data-price="{{index $record 4}}" data-limit="{{index (index $records 0) 5}}">
+        </td>
+        <td colspan="2">
+            <div class="quantity-wrapper">
+                <div class="quantity-controls" data-name="{{index $record 2}}">
+                    <button class="decrement-btn" data-name="{{index $record 2}}" disabled>-</button>
+                    <button class="increment-btn" data-name="{{index $record 2}}" disabled>+</button>
                 </div>
-            </td>
-            {{end}}
+            </div>
+        </td>
+        {{end}}
         </tr>
         {{end}}
     </table>
     <ul class="selected-items" data-table="{{index (index $records 0) 2}}"></ul>
     {{end}}
-</div>
+</div> <!-- Close the left div -->
 <div class="right">
     <div>
         <h2>Izbrani izdelki</h2>
         <div id="selected-items-container"></div>
     </div>
-    <div id="total-price"></div>
+    <div class="total-price-wrapper">
+        <div id="total-price"></div>
+        <button id="goToMyItemsButton">Končaj naročilo</button>
+    </div>
 </div>
 <script src="/static/js/items.js"></script>
+<script>
+    document.getElementById('goToMyItemsButton').addEventListener('click', function() {
+        if (confirm('Ali je to vse?')) {
+            window.location.href = '/myitems';
+        }
+    });
+</script>
 </body>
 </html>

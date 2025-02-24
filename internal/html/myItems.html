@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chosen Items</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/myItems.css">
+</head>
+<body>
+{{template "header.html".}}
+<div class="container">
+    <h2>Time left</h2>
+    <div id="countdown">Loading...</div>
+    <ul id="itemsList"></ul>
+</div>
+<script>
+    const deadline = "{{.Deadline}}";
+</script>
+<script src="/static/js/index.js"></script>
+</body>
+</html>

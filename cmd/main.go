@@ -125,9 +125,30 @@ func main() {
 		http.Redirect(w, r, "/index", http.StatusSeeOther)
 	}
 
+	myItems := func(w http.ResponseWriter, r *http.Request) {
+		tmplPath1 := filepath.Join(baseDir, "../internal/html/myItems.html")
+		tmplPath2 := filepath.Join(baseDir, "../internal/html/header.html")
+		tmp4 := template.Must(template.ParseFiles(tmplPath1, tmplPath2))
+
+		// Read the deadline from the file
+		deadlinePath := filepath.Join(baseDir, "../data/deadline.txt")
+		deadline, err := os.ReadFile(deadlinePath)
+		if err != nil {
+			http.Error(w, "Could not read deadline", http.StatusInternalServerError)
+			return
+		}
+
+		// Pass the deadline to the template
+		data := map[string]string{
+			"Deadline": string(deadline),
+		}
+		tmp4.Execute(w, data)
+	}
+
 	http.HandleFunc("/", h1)
 	http.HandleFunc("/items", internaItems)
 	http.HandleFunc("/admin", adminCtrl)
 	http.HandleFunc("/upload", uploadHandler)
+	http.HandleFunc("/myitems", myItems)
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }
