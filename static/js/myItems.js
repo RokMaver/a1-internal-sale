@@ -31,6 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Display total price
     const totalPriceElement = document.createElement("div");
-    totalPriceElement.innerHTML = `<h3>Total Price: €${totalPrice.toFixed(2)}</h3>`;
+    totalPriceElement.innerHTML = `<h3>Skupna cena: €${totalPrice.toFixed(2)}</h3>`;
     itemsList.appendChild(totalPriceElement);
 });

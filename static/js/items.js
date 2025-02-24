@@ -109,8 +109,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function saveToLocalStorage() {
-        localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+        // Check if there are any selected items with quantity > 0
+        let hasSelectedItems = Object.values(selectedItems).some(tableItems =>
+            tableItems.some(item => item.quantity > 0)
+        );
+
+        if (hasSelectedItems) {
+            localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+        } else {
+            localStorage.removeItem('selectedItems'); // Remove key if no items are selected
+        }
     }
+
 
     function assignOrderToSelectedItem(tableName, itemName) {
         const item = findSelectedItem(tableName, itemName);

@@ -1,7 +1,7 @@
 :root {
     --background-color: #f9f9f9;
     --text-color: #333333;
-    --button-background: #c60000;
+    --button-background: #e3e3e6;
     --button-text: #ffffff;
     --base-variant: #e8e9ed;
     --table-odd: #f9f9f9;
@@ -11,9 +11,9 @@
 .darkmode {
     --background-color: #333333;
     --text-color: #ffffff;
-    --button-background: #c60000;
+    --button-background: #231456;
     --button-text: #ffffff;
-    --base-variant: #101425;
+    --base-variant: #292929;
     --table-odd: #292929;
     --table-hover: #3a3a3a;
 }
@@ -50,3 +50,5 @@
 .darkmode #theme-switch svg:last-child {
     display: block;
 }
+
+
