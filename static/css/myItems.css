@@ -1,13 +1,33 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-family: Arial, sans-serif;
-    background-color: var(--background-color);
-    margin-top: 15%;
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+/* Ensure full page scrolling */
+html, body {
+    width: 100%;
+    min-height: 100vh; /* Allows scrolling if content grows */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-y: auto; /* Enable full-page scrolling */
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+}
+
+/* Fixed header at the top */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--header-background, #fff);
+    z-index: 1000;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+}
+
+/* Page content container */
 .container {
     max-width: 800px;
     width: 100%;
@@ -16,8 +36,23 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     text-align: center;
+
+    /* Center when empty, expand up when full */
+    position: relative;
+    top: 50vh;
+    transform: translateY(-50%);
 }
 
+/* Ensure the container moves up when full */
+@media (min-height: 700px) {
+    .container {
+        position: static;
+        transform: none;
+        margin: 80px auto 20px;
+    }
+}
+
+/* Titles */
 h2 {
     text-align: center;
     color: var(--text-color);
@@ -28,6 +63,7 @@ h3 {
     color: var(--text-color);
 }
 
+/* Countdown Timer */
 #countdown {
     font-size: 1.5rem;
     font-weight: bold;
@@ -36,6 +72,7 @@ h3 {
     padding-bottom: 10px;
 }
 
+/* Items list (expands naturally, no internal scroll) */
 ul#itemsList {
     list-style-type: none; /* Removes bullet points */
     padding: 0;
@@ -43,12 +80,14 @@ ul#itemsList {
     color: var(--text-color);
 }
 
+/* Individual list items */
 ul#itemsList li {
     list-style: none; /* Ensures no bullets */
     padding: 5px 0;
     border-bottom: 1px solid #ddd;
 }
 
+/* Remove border from last item */
 ul#itemsList li:last-child {
     border-bottom: none;
 }

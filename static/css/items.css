@@ -27,6 +27,7 @@ body::-webkit-scrollbar {
 .left h2, .left table {
     margin-left: 20px; /* Adjust this value as needed */
 }
+
 .right {
     width: 30%;
     position: fixed;
