@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 checkbox.addEventListener('change', function () {
                     if (checkbox.checked) {
                         if (checkedCount >= tableLimit && tableLimit !== -1) {
-                            alert(`You can only select ${tableLimit} items from this table.`);
+                            showNotification(`Izbereš lahko samo ${tableLimit} izdelka iz te tabele.`);
                             checkbox.checked = false;
                             return;
                         }
@@ -197,4 +197,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     updateSelectedItemsContainer();
+
+    function showNotification(message) {
+        const notificationContainer = document.getElementById('notification-container');
+
+        const notification = document.createElement('div');
+        notification.classList.add('notification');
+        notification.textContent = message;
+
+        notificationContainer.appendChild(notification);
+
+        setTimeout(() => {
+            notification.remove();
+        }, 3500); // Remove after 3.5 seconds
+    }
+
 });
