@@ -1,0 +1,49 @@
+:root {
+    --background-color: #f9f9f9;
+    --text-color: #333333;
+    --button-background: #c60000;
+    --button-text: #ffffff;
+    --base-variant: #e8e9ed;
+}
+
+.darkmode {
+    --background-color: #333333;
+    --text-color: #ffffff;
+    --button-background: #c60000;
+    --button-text: #ffffff;
+    --base-variant: #101425;
+}
+
+#theme-switch {
+    height: 50px;
+    width: 50px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: var(--base-variant);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 10px;
+    right: 20px;
+}
+
+
+
+#theme-switch svg {
+    fill: var(--text-color);
+}
+#theme-switch svg:last-child {
+    display: none;
+}
+
+#theme-switch:hover {
+    cursor: pointer;
+}
+
+.darkmode #theme-switch svg:first-child {
+    display: none;
+}
+.darkmode #theme-switch svg:last-child {
+    display: block;
+}
