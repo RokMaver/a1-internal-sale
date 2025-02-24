@@ -11,16 +11,6 @@
 </head>
 <body>
 {{template "header.html".}}
-<div id="custom-confirm" class="hidden">
-    <div class="confirm-box">
-        <p id="confirm-message">Ali je to vse?</p>
-        <div class="confirm-buttons">
-            <button id="confirm-yes">Da</button>
-            <button id="confirm-no">Ne</button>
-        </div>
-    </div>
-</div>
-
 <div class="left">
     {{range $key, $records := .}}
     <h2>{{index (index $records 0) 2}}</h2>
