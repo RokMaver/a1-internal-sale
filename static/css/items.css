@@ -39,6 +39,18 @@ body::-webkit-scrollbar {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Hide horizontal overflow */
+}
+
+/* Hide scrollbar for Webkit browsers (Chrome, Safari, etc.) */
+.right::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.right {
+    scrollbar-width: none; /* Firefox */
 }
 
 .total-price-wrapper {
@@ -277,7 +289,3 @@ button.increment-btn:hover, button.decrement-btn:hover {
         transform: translateX(100%);
     }
 }
-
-
-
-
