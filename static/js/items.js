@@ -1,16 +1,19 @@
 document.addEventListener('DOMContentLoaded', function () {
     const selectedItemsContainer = document.getElementById('selected-items-container');
     const totalPriceElement = document.getElementById('total-price');
-    let selectedItems = {};
+    let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || {}; // Load stored selection
 
     document.querySelectorAll('.left table').forEach(table => {
         let checkedCount = 0;
         let tableLimit = -1;
-        const tableName = table.previousElementSibling.textContent.trim(); // Get table name
+        const tableName = table.previousElementSibling.textContent.trim();
 
         if (!selectedItems[tableName]) {
             selectedItems[tableName] = [];
         }
+
+        // Count previously checked items
+        checkedCount = selectedItems[tableName].filter(item => item.quantity > 0).length;
 
         table.querySelectorAll('tr').forEach(row => {
             const checkbox = row.querySelector('.item-checkbox');
@@ -30,15 +33,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const maxQuantity = itemLimit === -1 ? stockQuantity : Math.min(itemLimit, stockQuantity);
 
-                // Ensure the item exists in tracking
                 if (!selectedItems[tableName].some(item => item.name === itemName)) {
                     selectedItems[tableName].push({
                         name: itemName,
                         quantity: 0,
                         price: itemPrice,
                         max: maxQuantity,
-                        order: null // Track selection order
+                        order: null
                     });
+                }
+
+                // Restore previous selection
+                const storedItem = selectedItems[tableName].find(item => item.name === itemName);
+                if (storedItem && storedItem.quantity > 0) {
+                    checkbox.checked = true;
+                    quantityControls.classList.add('show-controls');
+                    incrementButton.disabled = false;
+                    decrementButton.disabled = false;
                 }
 
                 checkbox.addEventListener('change', function () {
@@ -63,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         decrementButton.disabled = true;
                     }
                     updateSelectedItemsContainer();
+                    saveToLocalStorage();
                 });
 
                 incrementButton.addEventListener('click', function () {
@@ -72,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         checkbox.checked = true;
                         quantityControls.classList.add('show-controls');
                         updateSelectedItemsContainer();
+                        saveToLocalStorage();
                     }
                 });
 
@@ -89,10 +102,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         decrementButton.disabled = true;
                     }
                     updateSelectedItemsContainer();
+                    saveToLocalStorage();
                 });
             }
         });
     });
+
+    function saveToLocalStorage() {
+        localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+    }
 
     function assignOrderToSelectedItem(tableName, itemName) {
         const item = findSelectedItem(tableName, itemName);
@@ -106,7 +124,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (item) {
             item.order = null;
         }
-        // Reorder remaining items
         reorderItemsInTable(tableName);
     }
 
@@ -129,6 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const item = findSelectedItem(tableName, itemName);
         if (item) {
             item.quantity = quantity;
+            saveToLocalStorage();
         }
     }
 
@@ -149,9 +167,8 @@ document.addEventListener('DOMContentLoaded', function () {
             if (filteredItems.length > 0) {
                 const tableSection = document.createElement('div');
                 tableSection.innerHTML = `<h3>${tableName}</h3>`;
-                const itemList = document.createElement('ol'); // Ordered List for Numbering
+                const itemList = document.createElement('ol');
 
-                // Sort items by their order of selection
                 filteredItems.sort((a, b) => a.order - b.order);
 
                 filteredItems.forEach(item => {
@@ -168,5 +185,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         totalPriceElement.textContent = `Skupna cena: ${totalPrice.toFixed(2)} €`;
     }
-});
 
+    updateSelectedItemsContainer();
+});
