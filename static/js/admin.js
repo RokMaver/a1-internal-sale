@@ -30,3 +30,31 @@ document.getElementById("csvfile").addEventListener("change", function() {
     const fileName = this.files[0].name;
     document.getElementById("fileNameDisplay").textContent = `Selected File: ${fileName}`;
 });
+document.getElementById("submitBtn").addEventListener("click", function(event) {
+    let deadlineValue = document.getElementById("deadline").value;
+    let fileInput = document.getElementById("csvfile").files.length;
+
+    if (!deadlineValue || fileInput === 0) {
+        event.preventDefault(); // Prevent form submission
+        if (!deadlineValue) {
+            showNotification("Please select a deadline before confirming.");
+        }
+        if (fileInput === 0) {
+            showNotification("Please upload a CSV file before confirming.");
+        }
+    }
+});
+
+function showNotification(message) {
+    const notificationContainer = document.getElementById('notification-container');
+
+    const notification = document.createElement('div');
+    notification.classList.add('notification');
+    notification.textContent = message;
+
+    notificationContainer.appendChild(notification);
+
+    setTimeout(() => {
+        notification.remove();
+    }, 3500); // Remove after 3.5 seconds
+}
