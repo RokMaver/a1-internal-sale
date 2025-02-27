@@ -4,10 +4,21 @@ const targetDate = new Date(deadline).getTime();
 function updateCountdown() {
     const now = new Date().getTime(); // Current time
     const timeLeft = targetDate - now; // Time remaining in milliseconds
+    const button = document.getElementById("itemsButton"); // Get the button element
 
     if (timeLeft <= 0) {
         document.getElementById("countdown").innerHTML = "Time's up! 🎉";
         clearInterval(interval);
+
+        if (button) {  // Ensure button exists before modifying
+            button.innerHTML = "My Items";
+            button.onclick = function() {
+                window.location.href = "/myitems";
+            };
+        } else {
+            console.error("Button not found!");
+        }
+
         return;
     }
 
