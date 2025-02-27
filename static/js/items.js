@@ -213,3 +213,37 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('confirmation-modal');
+    const confirmButton = document.getElementById('confirm-button');
+    const cancelButton = document.getElementById('cancel-button');
+    const goToMyItemsButton = document.getElementById('goToMyItemsButton');
+
+    if (!goToMyItemsButton) {
+        console.error("❌ Button 'goToMyItemsButton' not found!");
+        return;
+    }
+
+    // Ensure modal is hidden initially
+    modal.style.display = 'none';
+
+    goToMyItemsButton.addEventListener('click', function () {
+        console.log("✅ Button Clicked: Showing Modal");
+        modal.style.display = 'flex';
+    });
+
+    confirmButton.addEventListener('click', function () {
+        window.location.href = '/myitems';
+    });
+
+    cancelButton.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+});
