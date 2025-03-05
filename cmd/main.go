@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"time"
 )
 
 func getBaseDir() string {
@@ -46,6 +47,28 @@ func main() {
 
 	// Handler for the items page
 	internaItems := func(w http.ResponseWriter, r *http.Request) {
+		// Read the deadline from the file
+		deadlinePath := filepath.Join(baseDir, "../data/deadline.txt")
+		deadline, err := os.ReadFile(deadlinePath)
+		if err != nil {
+			http.Error(w, "Could not read deadline", http.StatusInternalServerError)
+			return
+		}
+
+		// Parse the deadline with RFC3339 layout
+		deadlineTime, err := time.Parse(time.RFC3339, string(deadline))
+		if err != nil {
+			log.Printf("Deadline string: %s", string(deadline))
+			http.Error(w, "Invalid deadline format", http.StatusInternalServerError)
+			return
+		}
+
+		// Check if the deadline has passed
+		if time.Now().After(deadlineTime) {
+			http.Error(w, "The items page is locked as the deadline has passed", http.StatusForbidden)
+			return
+		}
+
 		filePath := filepath.Join(baseDir, "../data/uploaded.csv")
 		file, err := os.Open(filePath)
 		if err != nil {

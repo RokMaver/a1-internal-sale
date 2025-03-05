@@ -7,11 +7,9 @@ document.getElementById("setDeadlineBtn").addEventListener("click", function() {
 
     dateTimeInput.addEventListener("change", function() {
         const selectedDate = new Date(this.value);
-        const formattedDate = `${selectedDate.getDate().toString().padStart(2, '0')}.${(selectedDate.getMonth() + 1).toString().padStart(2, '0')}.${selectedDate.getFullYear()}`;
-        const formattedTime = `${selectedDate.getHours().toString().padStart(2, '0')}:${selectedDate.getMinutes().toString().padStart(2, '0')}`;
-        const formattedDateTime = `${formattedDate} ${formattedTime}`;
+        const formattedDateTime = selectedDate.toISOString(); // RFC3339 format
 
-        document.getElementById("deadline").value = this.value;
+        document.getElementById("deadline").value = formattedDateTime;
         document.getElementById("submitBtn").style.display = "inline-block"; // Show submit button
 
         // Display the selected deadline
@@ -26,10 +24,12 @@ document.getElementById("setDeadlineBtn").addEventListener("click", function() {
 
     dateTimeInput.showPicker();
 });
+
 document.getElementById("csvfile").addEventListener("change", function() {
     const fileName = this.files[0].name;
     document.getElementById("fileNameDisplay").textContent = `Selected File: ${fileName}`;
 });
+
 document.getElementById("submitBtn").addEventListener("click", function(event) {
     let deadlineValue = document.getElementById("deadline").value;
     let fileInput = document.getElementById("csvfile").files.length;
