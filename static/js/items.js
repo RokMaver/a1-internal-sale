@@ -24,14 +24,20 @@ document.addEventListener('DOMContentLoaded', function () {
             if (checkbox && incrementButton && decrementButton && quantityControls) {
                 const itemName = checkbox.getAttribute('data-name');
                 const itemPrice = parseFloat(checkbox.getAttribute('data-price'));
-                const itemLimit = parseInt(checkbox.getAttribute('data-limit'), 10);
+                const itemLimit = checkbox.getAttribute('data-limit');
                 const stockQuantity = parseInt(checkbox.getAttribute('data-quantity'), 10);
 
                 if (tableLimit === -1) {
-                    tableLimit = itemLimit === -1 ? -1 : 2; // If -1, unlimited; otherwise, max 2 selections
+                    if (itemLimit === 'n') {
+                        tableLimit = -1; // Unlimited selections
+                    } else if (itemLimit === 'x') {
+                        tableLimit = 'x'; // Unlimited unique items, but only one of each
+                    } else {
+                        tableLimit = 3; // Default limit
+                    }
                 }
 
-                const maxQuantity = itemLimit === -1 ? stockQuantity : Math.min(itemLimit, stockQuantity);
+                const maxQuantity = itemLimit === 'n' ? stockQuantity : (itemLimit === 'x' ? 1 : Math.min(parseInt(itemLimit, 10), stockQuantity));
 
                 if (!selectedItems[tableName].some(item => item.name === itemName)) {
                     selectedItems[tableName].push({
@@ -54,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 checkbox.addEventListener('change', function () {
                     if (checkbox.checked) {
-                        if (checkedCount >= tableLimit && tableLimit !== -1) {
+                        if (tableLimit !== 'x' && checkedCount >= tableLimit && tableLimit !== -1) {
                             showNotification(`Izbereš lahko samo ${tableLimit} izdelka iz te tabele.`);
                             checkbox.checked = false;
                             return;
@@ -120,7 +126,6 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.removeItem('selectedItems'); // Remove key if no items are selected
         }
     }
-
 
     function assignOrderToSelectedItem(tableName, itemName) {
         const item = findSelectedItem(tableName, itemName);
