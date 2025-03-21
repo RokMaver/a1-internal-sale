@@ -13,9 +13,13 @@
     <h2>Do konca razprodaje</h2>
     <div id="countdown">Loading...</div>
     <ul id="itemsList"></ul>
+    <button id="editItemsButton">Uredi</button>
 </div>
 <script>
     const deadline = "{{.Deadline}}";
+    document.getElementById('editItemsButton').addEventListener('click', function() {
+        window.location.href = '/items';
+    });
 </script>
 <script src="/static/js/index.js"></script>
 <script src="/static/js/myItems.js"></script>

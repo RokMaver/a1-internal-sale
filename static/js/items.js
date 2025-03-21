@@ -1,7 +1,36 @@
 document.addEventListener('DOMContentLoaded', function () {
     const selectedItemsContainer = document.getElementById('selected-items-container');
     const totalPriceElement = document.getElementById('total-price');
+    const goToMyItemsButton = document.getElementById('goToMyItemsButton');
+    const modal = document.getElementById('location-modal');
+    const ljButton = document.getElementById('lj-button');
+    const mbButton = document.getElementById('mb-button');
+    const closeButton = document.getElementById('close-button');
     let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || {}; // Load stored selection
+
+    goToMyItemsButton.addEventListener('click', function () {
+        modal.style.display = 'flex';
+    });
+
+    ljButton.addEventListener('click', function () {
+        localStorage.setItem('locationChoice', 'LJ');
+        window.location.href = '/myitems';
+    });
+
+    mbButton.addEventListener('click', function () {
+        localStorage.setItem('locationChoice', 'MB');
+        window.location.href = '/myitems';
+    });
+
+    closeButton.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
 
     document.querySelectorAll('.left table').forEach(table => {
         let checkedCount = 0;
@@ -217,38 +246,4 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 3500); // Remove after 3.5 seconds
     }
 
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    const modal = document.getElementById('confirmation-modal');
-    const confirmButton = document.getElementById('confirm-button');
-    const cancelButton = document.getElementById('cancel-button');
-    const goToMyItemsButton = document.getElementById('goToMyItemsButton');
-
-    if (!goToMyItemsButton) {
-        console.error("❌ Button 'goToMyItemsButton' not found!");
-        return;
-    }
-
-    // Ensure modal is hidden initially
-    modal.style.display = 'none';
-
-    goToMyItemsButton.addEventListener('click', function () {
-        console.log("✅ Button Clicked: Showing Modal");
-        modal.style.display = 'flex';
-    });
-
-    confirmButton.addEventListener('click', function () {
-        window.location.href = '/myitems';
-    });
-
-    cancelButton.addEventListener('click', function () {
-        modal.style.display = 'none';
-    });
-
-    window.onclick = function (event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    };
 });

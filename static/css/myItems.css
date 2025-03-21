@@ -65,6 +65,7 @@ h2 {
 
 h3 {
     padding-top: 30px;
+    padding-bottom: 20px;
     color: var(--text-color);
 }
 
@@ -95,4 +96,16 @@ ul#itemsList li {
 /* Remove border from last item */
 ul#itemsList li:last-child {
     border-bottom: none;
+}
+
+button {
+    padding: 8px 16px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #e60000;
+    border: 1px solid #e60000;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+
 }
